@@ -7,9 +7,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Profile } from "../profile/Profile";
 
-const DropDown = ({ user }: { user: any }) => {
+const DropDown = () => {
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/" });
   };
@@ -18,22 +17,10 @@ const DropDown = ({ user }: { user: any }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer">
-          {user?.image ? (
-            <img
-              src={user.image}
-              alt={user.name}
-              className="w-full h-full rounded-full object-cover"
-            />
-          ) : (
-            <span className="text-gray-600 font-semibold">
-              {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
-            </span>
-          )}
+          <span className="text-gray-600 font-semibold">U</span>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end">
-        <Profile />
-        <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleLogout}
           className="cursor-pointer hover:bg-gray-200 transition duration-200"
