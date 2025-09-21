@@ -2,19 +2,16 @@
 import useChatStore from "@/store/useChatStore";
 import { useEffect } from "react";
 
-const SideBarList = ({ session }: { session: any }) => {
+const SideBarList = () => {
   const { loadChats, chats, selectedChat, selectChat, chatsLoader } =
     useChatStore();
-  const user = session?.user;
 
   useEffect(() => {
     const fetchChats = async () => {
       loadChats();
     };
-    if (user) {
-      fetchChats();
-    }
-  }, [user, loadChats]);
+    fetchChats();
+  }, [loadChats]);
 
   return (
     <>
@@ -27,7 +24,9 @@ const SideBarList = ({ session }: { session: any }) => {
                 onClick={() => selectChat(chat)}
                 key={chat._id}
                 className={`btn btn-ghost text-start cursor-pointer w-full py-2 rounded-md px-2 hover:bg-[#212121] ${
-                  selectedChat?._id === chat._id ? "bg-[#212121] text-white" : ""
+                  selectedChat?._id === chat._id
+                    ? "bg-[#212121] text-white"
+                    : ""
                 }`}
               >
                 {chat.chatName ? chat.chatName : "New Chat"}

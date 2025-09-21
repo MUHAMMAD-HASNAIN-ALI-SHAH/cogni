@@ -3,7 +3,7 @@ import useChatStore from "@/store/useChatStore";
 import Chats from "./Chats";
 import InputComponent from "../MessageInput/InputComponent";
 
-const MessagesComponent = ({ session }: { session: any }) => {
+const MessagesComponent = () => {
   const { selectedChat, tempChat } = useChatStore();
   return (
     <div className="h-full w-full bg-[#212121]">
@@ -19,7 +19,7 @@ const MessagesComponent = ({ session }: { session: any }) => {
       )}
       {!tempChat && selectedChat && (
         <>
-          <Chats session={session} />
+          <Chats />
           <InputComponent />
         </>
       )}

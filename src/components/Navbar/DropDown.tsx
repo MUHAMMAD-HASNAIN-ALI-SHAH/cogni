@@ -11,7 +11,7 @@ import { Profile } from "../profile/Profile";
 
 const DropDown = ({ user }: { user: any }) => {
   const handleLogout = async () => {
-    await signOut({ callbackUrl: "/" }); // redirects to home after logout
+    await signOut({ callbackUrl: "/" });
   };
 
   return (

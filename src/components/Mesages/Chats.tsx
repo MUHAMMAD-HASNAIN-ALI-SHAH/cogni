@@ -2,20 +2,18 @@
 import useChatStore from "@/store/useChatStore";
 import useMessageStore from "@/store/useMessageStore";
 import { useEffect, useRef } from "react";
-import ReactMarkdown from "react-markdown";
 
-const Chats = ({ session }: { session: any }) => {
+const Chats = () => {
   const { selectedChat } = useChatStore();
   const { getMessages, messages, sendMessageLoader, getMessagesLoader } =
     useMessageStore();
   const bottomRef = useRef<HTMLDivElement | null>(null);
-  const user = session?.user;
 
   useEffect(() => {
-    if (selectedChat && user?.id) {
+    if (selectedChat) {
       getMessages();
     }
-  }, [selectedChat, user?.id, getMessages]);
+  }, [selectedChat, getMessages]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

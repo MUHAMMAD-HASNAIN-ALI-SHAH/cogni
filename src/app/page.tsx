@@ -9,11 +9,11 @@ export default async function Home() {
   const session = await auth();
   return (
     <SidebarProvider className="">
-      <AppSidebar  session={session} />
+      <AppSidebar  />
       <div className="w-full h-screen bg-gray-200">
         <Navbar session={session} />
         <div className="flex w-full h-[90vh]">
-          <MessagesComponent session={session} />
+          <MessagesComponent />
         </div>
       </div>
     </SidebarProvider>

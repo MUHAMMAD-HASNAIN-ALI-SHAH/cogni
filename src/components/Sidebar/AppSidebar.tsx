@@ -9,12 +9,11 @@ import {
 import SideBarList from "./SideBarList";
 import useChatStore from "@/store/useChatStore";
 
-const NewChatButton = ({ session }: { session: any }) => {
+const NewChatButton = () => {
   const { addChat } = useChatStore();
-  const user = session?.user;
   return (
     <div
-      onClick={() => addChat(user)}
+      onClick={() => addChat()}
       className="w-full rounded-md py-2 flex gap-3 hover:bg-[#242424] px-2 cursor-pointer"
     >
       <i className="ri-chat-3-line"></i> New Chat
@@ -22,7 +21,7 @@ const NewChatButton = ({ session }: { session: any }) => {
   );
 };
 
-export function AppSidebar({ session }: { session: any }) {
+export function AppSidebar() {
   return (
     <Sidebar
       className="bg-[#181818] text-white border border-[#181818]"
@@ -31,7 +30,7 @@ export function AppSidebar({ session }: { session: any }) {
         className="bg-[#181818] text-white"
       >
         <div className="mt-10">
-          <NewChatButton session={session} />
+          <NewChatButton />
         </div>
       </SidebarHeader>
       <SidebarContent
@@ -39,7 +38,7 @@ export function AppSidebar({ session }: { session: any }) {
       >
         <SidebarGroup>
           <div className="w-full">
-            <SideBarList session={session} />
+            <SideBarList />
           </div>
         </SidebarGroup>
       </SidebarContent>
