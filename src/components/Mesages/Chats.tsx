@@ -26,7 +26,7 @@ const Chats = () => {
           <div role="status">
             <svg
               aria-hidden="true"
-              className="w-10 h-15 text-black animate-spin dark:text-gray-600 fill-white"
+              className="w-10 h-15 text-[#181818] animate-spin dark:text-gray-600 fill-[#212121]"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ const Chats = () => {
       {sendMessageLoader && (
         <div className="flex flex-col gap-2 w-full">
           <div className="w-full text-right">
-            <span className="bg-gray-400 py-2 px-4 rounded-sm">Sending...</span>
+            <span className="bg-[#181818] text-white py-2 px-4 rounded-sm">Sending...</span>
           </div>
           <div className="w-full">
             <div className="w-full bg-transparent">...</div>

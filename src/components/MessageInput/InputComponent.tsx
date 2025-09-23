@@ -12,6 +12,7 @@ const InputComponent = () => {
     e.preventDefault();
     if (!message.trim() || sendMessageLoader) return;
 
+    setMessage("");
     if (tempChat) {
       await createChat(message);
       await sendMessage({ message, chatId: selectedChat?._id });
