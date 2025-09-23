@@ -13,7 +13,7 @@ interface ChatStore {
   selectedChat: Chat | null;
   tempChat: boolean;
   chats: Chat[];
-  chatsLoader: boolean; 
+  chatsLoader: boolean;
   loadChats: () => void;
   addChat: () => void;
   selectChat: (chat: Chat) => void;
@@ -31,8 +31,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
     try {
       set({ chatsLoader: true });
       // if (useChatStore.getState().selectedChat) return null;
-      const response = await axios.get(`${URL}/api/chat`, {
-      });
+      const response = await axios.get(`${URL}/api/chat`, {});
       set({ chatsLoader: false });
       set({ chats: response.data.chats });
     } catch (error) {
@@ -56,10 +55,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
       const form = {
         message,
       };
-      const response = await axios.post(
-        `${URL}/api/chat`,
-        form,
-      );
+      const response = await axios.post(`${URL}/api/chat`, form);
       set({ selectedChat: response.data.chat });
       set({ tempChat: false });
       set({ chats: [response.data.chat, ...get().chats] });
@@ -69,6 +65,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
     }
   },
   selectChat: (chat) => {
+    if (get().selectedChat?._id === chat._id) return;
     set({ tempChat: false });
     set({ selectedChat: chat });
     useMessageStore.getState().getMessages();
