@@ -23,8 +23,6 @@ interface MessageStore {
   getMessages: () => void;
 }
 
-const URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
 const useMessageStore = create<MessageStore>((set, get) => ({
   messages: [],
   sendMessageLoader: false,
@@ -35,7 +33,7 @@ const useMessageStore = create<MessageStore>((set, get) => ({
       set({ sendMessageLoader: true });
       form.chatId = useChatStore.getState().selectedChat?._id || "";
       const response = await axios.post(
-        `${URL}/api/message`,
+        `/api/message`,
         form
       );
       set({ sendMessageLoader: false });
@@ -52,7 +50,7 @@ const useMessageStore = create<MessageStore>((set, get) => ({
       set({ messages: [] });
       set({ getMessagesLoader: true });
       const response = await axios.get(
-        `${URL}/api/message/${
+        `/api/message/${
           useChatStore.getState().selectedChat!._id
         }`,
       );

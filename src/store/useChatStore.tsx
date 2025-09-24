@@ -20,8 +20,6 @@ interface ChatStore {
   createChat: (message: string) => void;
 }
 
-const URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
 const useChatStore = create<ChatStore>((set, get) => ({
   selectedChat: null,
   tempChat: true,
@@ -31,7 +29,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
     try {
       set({ chatsLoader: true });
       // if (useChatStore.getState().selectedChat) return null;
-      const response = await axios.get(`${URL}/api/chat`, {});
+      const response = await axios.get(`/api/chat`, {});
       set({ chatsLoader: false });
       set({ chats: response.data.chats });
     } catch (error) {
@@ -55,7 +53,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
       const form = {
         message,
       };
-      const response = await axios.post(`${URL}/api/chat`, form);
+      const response = await axios.post(`/api/chat`, form);
       set({ selectedChat: response.data.chat });
       set({ tempChat: false });
       set({ chats: [response.data.chat, ...get().chats] });
