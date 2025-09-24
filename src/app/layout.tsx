@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hasnain AI Chat Bot",
-  description: "This is an Hasnain AI Chat Bot application. It allows users to chat with an AI bot.",
+  title: "Cogni AI bot",
+  description:
+    "This is an Cogni AI Chat Bot application. It allows users to chat with an AI bot.",
 };
 
 export default function RootLayout({
@@ -25,15 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      
-        <html lang="en">
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
-          >
-            <Toaster />
-            {children}
-          </body>
-        </html>
-      
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
+      >
+        <Toaster />
+        {children}
+      </body>
+    </html>
   );
 }
