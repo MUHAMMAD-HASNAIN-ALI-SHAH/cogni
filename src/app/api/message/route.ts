@@ -7,6 +7,19 @@ import { auth } from "@/lib/auth";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMNI_API_KEY! });
 
+/* ------------------ CORS headers ------------------ */
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "https://cogni-alpha.vercel.app", // 👈 your frontend domain
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+/* ------------------ OPTIONS handler ------------------ */
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: CORS_HEADERS });
+}
+
+/* ------------------ POST handler ------------------ */
 export async function POST(req: Request) {
   await db();
   let { message, chatId } = await req.json();
@@ -16,21 +29,19 @@ export async function POST(req: Request) {
     const email = session?.user?.email;
 
     if (!email) {
-      return NextResponse.json({ msg: "No userId provided" }, { status: 401 });
+      return NextResponse.json({ msg: "No userId provided" }, { status: 401, headers: CORS_HEADERS });
     }
 
     const checkChat = await Chat.findById(chatId);
     if (!checkChat) {
-      return NextResponse.json({ message: "Chat not found" }, { status: 404 });
+      return NextResponse.json({ message: "Chat not found" }, { status: 404, headers: CORS_HEADERS });
     }
 
     chatId = checkChat._id;
     checkChat.totalChats += 1;
     await checkChat.save();
 
-    const previousMessages = await Message.find({ chatId }).sort({
-      createdAt: 1,
-    });
+    const previousMessages = await Message.find({ chatId }).sort({ createdAt: 1 });
 
     const conversation = [
       ...previousMessages
@@ -67,7 +78,7 @@ export async function POST(req: Request) {
       message,
       email,
       chatId,
-      reply:cleaned,
+      reply: cleaned,
     });
 
     return NextResponse.json(
@@ -75,7 +86,7 @@ export async function POST(req: Request) {
         message: "Message created successfully",
         data: newMessage,
       },
-      { status: 201 }
+      { status: 201, headers: CORS_HEADERS }
     );
   } catch (error: any) {
     console.error(error);
@@ -84,7 +95,7 @@ export async function POST(req: Request) {
         message: "Error creating record",
         error: error.message,
       },
-      { status: 500 }
+      { status: 500, headers: CORS_HEADERS }
     );
   }
 }
