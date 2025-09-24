@@ -10,21 +10,18 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
-// Preflight (CORS)
+// ✅ Preflight (CORS)
 export async function OPTIONS() {
   return NextResponse.json({}, { headers: CORS_HEADERS });
 }
 
-// ✅ Use Next.js' built-in type for the second arg
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { chatId: string } }
-) {
+export async function GET(req: any, context: any) {
   await db();
 
   try {
     const session = await auth();
     const email = session?.user?.email;
+
     if (!email) {
       return NextResponse.json(
         { msg: "No userId provided" },
@@ -32,7 +29,7 @@ export async function GET(
       );
     }
 
-    const chatId = params.chatId;
+    const chatId = context.params.chatId;
 
     const getChat = await Chat.findById(chatId);
     if (!getChat) {
