@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sidebar";
 import SideBarList from "./SideBarList";
 import useChatStore from "@/store/useChatStore";
+import Auth from "./Auth";
 
 const NewChatButton = () => {
   const { addChat } = useChatStore();
@@ -21,33 +22,31 @@ const NewChatButton = () => {
   );
 };
 
-export function AppSidebar() {
+export function AppSidebar({
+  user,
+}: {
+  user: {
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+  };
+}) {
   return (
-    <Sidebar
-      className="bg-[#181818] text-white border border-[#181818]"
-    >
-      <SidebarHeader
-        className="bg-[#181818] text-white"
-      >
+    <Sidebar className="bg-[#181818] text-white border border-[#181818]">
+      <SidebarHeader className="bg-[#181818] text-white">
         <div className="mt-10">
           <NewChatButton />
         </div>
       </SidebarHeader>
-      <SidebarContent
-        className="bg-[#181818] text-white"
-      >
+      <SidebarContent className="bg-[#181818] text-white">
         <SidebarGroup>
           <div className="w-full">
             <SideBarList />
           </div>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter
-        className="bg-[#181818] text-white"
-      >
-        <div className="flex justify-center items-center w-full h-10 text-gray-500 text-sm">
-          <p>Made with ❤️ by Cogni</p>
-        </div>
+      <SidebarFooter className="bg-[#212121] text-white">
+        <Auth user={user} />
       </SidebarFooter>
     </Sidebar>
   );
