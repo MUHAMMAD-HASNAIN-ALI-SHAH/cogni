@@ -4,25 +4,27 @@ import Message from "@/models/message.model";
 import Chat from "@/models/chat.model";
 import { auth } from "@/lib/auth";
 
-// ✅ Common CORS headers
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "https://cogni-alpha.vercel.app", // ✅ your frontend domain
+  "Access-Control-Allow-Origin": "https://cogni-alpha.vercel.app",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
-// ✅ Preflight response for CORS
+// Preflight (CORS)
 export async function OPTIONS() {
   return NextResponse.json({}, { headers: CORS_HEADERS });
 }
 
-export async function GET(req: NextRequest, context: { params: { chatId: string } }) {
+// ✅ Use Next.js' built-in type for the second arg
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { chatId: string } }
+) {
   await db();
 
   try {
     const session = await auth();
     const email = session?.user?.email;
-
     if (!email) {
       return NextResponse.json(
         { msg: "No userId provided" },
@@ -30,7 +32,7 @@ export async function GET(req: NextRequest, context: { params: { chatId: string 
       );
     }
 
-    const chatId = context.params.chatId;
+    const chatId = params.chatId;
 
     const getChat = await Chat.findById(chatId);
     if (!getChat) {
